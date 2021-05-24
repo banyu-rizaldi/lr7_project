@@ -23,6 +23,7 @@ echo 'Local time : ' . $jam;
 
 @section('content')
 
+
 <section class="content">
     <div class="container-fluid">
         @if ($message = Session::get('success'))
