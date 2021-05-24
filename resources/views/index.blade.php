@@ -1,0 +1,566 @@
+@extends('layouts.master')
+@section('judul')
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+@endsection
+
+<?php
+$tgl = date('l, d M Y');
+echo $tgl;
+?>
+<br>
+<?php
+date_default_timezone_set('Asia/Jakarta');
+$jam = date('H:i');
+echo 'Local time : ' . $jam;
+?>
+
+@endsection
+
+@section('judul1')
+<a href="#">Dashboard</a>
+@endsection
+
+@section('content')
+
+<section class="content">
+    <div class="container-fluid">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-block">
+                <button class="close" type="button" data-dismiss="alert">x</button>
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ route('dashboard') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="WITEL">WITEL</label>
+                                <select name="WITEL" id="WITEL" class="form-control col-lg-12 mr-3 mt-1">
+                                    <option value="">DIVRE 2</option>
+                                    @foreach ($data as $data1)
+                                        <option value="{{ $data1->WITEL }}">
+                                            {{ $data1->WITEL }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                
+                            </div>
+
+                            <button type="submit" class="btn btn-primary col-lg-12 mt-1">Go</button>
+
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mt-4">
+                    <form>
+                        <div class="form-group">
+                            <label for="WITEL">WITEL</label>
+                            @foreach($allData1 as $item)
+                                @if (!request()->filled('WITEL'))
+                                <input type="text" class="form-control" id="WITEL" value="DIVRE 2" readonly>
+                                @else
+                                <input type="text" class="form-control" id="WITEL" value="{{ $item->WITEL }}" readonly>
+                                @endif
+                            @endforeach
+                                                    
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->sales) }}</b></h3>
+                        @endforeach
+                        <p class="mb-0"><b>TOTAL SALES</b></p>
+                        <h6 class="mt-0"><small><i>(Mtd H-1)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-dollar-sign"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->A * 100,1) . '%' }}</b></h3>
+                        @endforeach
+                        <p class="mb-0"><b>CHURN TO SALES</b></p>
+                        <h6 class="mt-0"><small><i>(Mtd H-1)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-percent"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->B * 100,1) . '%' }}</b></h3>
+                        @endforeach
+                       
+                        <p class="mb-0"><b>CHURN TO LIS</b></p>
+                        <h6 class="mt-0"><small><i>(Mtd H-1)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-percent"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->lis) }}</b></h3>
+                        @endforeach
+                        <p class="mb-0"><b>TOTAL LIS</b></p>
+                        <h6 class="mt-0"><small><i>(LM)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-user-secret"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->alert) }}</b></h3>
+                        @endforeach
+                        <p class="mb-0"><b>VH ALERT</b></p>
+                        <h6 class="mt-0"><small><i>(Mtd H-1)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-exclamation"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-12">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        @foreach ($allData1 as $item)
+                            <h3><b>{{ number_format($item->churn) }}</b></h3>
+                        @endforeach
+                        <p class="mb-0"><b>TOTAL CHURN</b></p>
+                        <h6 class="mt-0"><small><i>(Mtd H-1)</i></small></h6>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-fw fa-times"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <div id="chart">
+
+                            </div>
+                        </div>
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+            <!-- /.Left col -->
+
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable">
+
+                <!-- Map card -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content p-0" id="cek" name="cek">
+                            <div id="pie" name="pie">
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body-->
+                </div>
+                <!-- /.card -->
+
+            </section>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="tab-content p-0">
+                            <table id="table-sto" class="table table-hover table-bordered table-responsive">
+                                {{-- filter --}}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>WITEL</th>
+                                        @if (request()->filled('WITEL'))
+                                        <th>STO</th>
+                                        @endif
+                                        <th>TOTAL LIS</th>
+                                        <!-- <th>TOTAL ALERT</th> -->
+                                        <th>VH ALERT</th>
+                                        <th>TOTAL CHURN</th>
+                                        <th>TOTAL SALES</th>
+                                        <th>CHURN TO SALES</th>
+                                        <th>CHURN TO LIS</th>
+                                        <th>KW1</th>
+                                        <th>KW2</th>
+                                        <th>KW3</th>
+                                        <th>KW4</th>
+                                        <th>%KW1</th>
+                                        <th>%KW2</th>
+                                        <th>%KW3</th>
+                                        <th>%KW4</th>
+                                    </tr>
+                                </thead>
+                                {{-- end --}}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>WITEL</th>
+                                        @if (request()->filled('WITEL'))
+                                        <th>STO</th>
+                                        @endif
+                                        <th>TOTAL LIS</th>
+                                        <!-- <th>TOTAL ALERT</th> -->
+                                        <th>VH ALERT</th>
+                                        <th>TOTAL CHURN</th>
+                                        <th>TOTAL SALES</th>
+                                        <th>CHURN TO SALES</th>
+                                        <th>CHURN TO LIS</th>
+                                        <th>KW1</th>
+                                        <th>KW2</th>
+                                        <th>KW3</th>
+                                        <th>KW4</th>
+                                        <th>%KW1</th>
+                                        <th>%KW2</th>
+                                        <th>%KW3</th>
+                                        <th>%KW4</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($allData as $no => $data)
+                                        <tr>
+                                            <td>{{ $no + 1 }}</td>
+                                            <td>{{ $data->WITEL }}</td>
+                                            @if (request()->filled('WITEL'))
+                                            <td>{{ $data->STO }}</td>
+                                            @endif
+                                            <td class="text-right">{{ number_format($data->lis) }}</td>
+                                            <td class="text-right">{{ number_format($data->alert) }}</td>
+                                            <td class="text-right">{{ number_format($data->churn) }}</td>
+                                            <td class="text-right">{{ number_format($data->sales) }}</td>
+                                            <td class="text-right">{{ number_format($data->A * 100,1) . '%' }}</td>
+                                            <td class="text-right">{{ number_format($data->B * 100,1) . '%' }}</td>
+                                            <td class="text-right">{{ number_format($data->kw1) }}</td>
+                                            <td class="text-right">{{ number_format($data->kw2) }}</td>
+                                            <td class="text-right">{{ number_format($data->kw3) }}</td>
+                                            <td class="text-right">{{ number_format($data->kw4) }}</td>
+                                            <td class="text-right">{{ number_format($data->v * 100,1) . '%' }}</td>
+                                            <td class="text-right">{{ number_format($data->w * 100,1) . '%' }}</td>
+                                            <td class="text-right">{{ number_format($data->x * 100,1) . '%' }}</td>
+                                            <td class="text-right">{{ number_format($data->y * 100,1) . '%' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+            <!-- /.Left col -->
+
+
+        </div>
+        <!-- /.row (main row) -->
+
+
+    </div><!-- /.container-fluid -->
+</section>
+@endsection
+
+
+
+@section('after-footer')
+
+<script>
+     $("#table-sto").DataTable({
+             	    "lengthChange": false,
+                    "paging": true,
+                    "ordering": false,
+                    "info": false,
+                    
+                    initComplete: function() {
+                        this.api().columns().every(function() {
+                            var column = this;
+                            var select = $(
+                                    '<select><option value=""></option></select>'
+                                    )
+                                .appendTo($(column.header()).empty())
+                                .on('change', function() {
+                                    var val = $.fn.dataTable.util
+                                        .escapeRegex(
+                                            $(this).val()
+                                        );
+
+                                    column
+                                        .search(val ? '^' + val + '$' : '',
+                                            true, false)
+                                        .draw();
+                                });
+
+                            column.data().unique().sort().each(function(d, j) {
+                                select.append('<option value="' + d +
+                                    '">' + d + '</option>')
+                            });
+                        });
+                    }
+                });
+</script>
+
+@endsection
+
+@section('before-footer')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+{{-- highchart --}}
+<script>
+    Highcharts.chart('chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Summary LIS, Sales & Churn'
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [
+                'Dec'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'TOTAL LIS',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->lis }},
+                <?php } ?>
+            ]}, {
+
+            name: 'VH ALERT',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->alert }},
+                <?php } ?>
+            ]}, {
+
+            name: 'TOTAL CHURN',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->churn }},
+                <?php } ?>
+            ]}, {
+            
+            name: 'TOTAL SALES',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->sales }},
+                <?php } ?>
+            ]}, {
+            name: 'KW1',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->kw1 }},
+                <?php } ?>
+            ]}, {
+            name: 'KW2',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->kw2 }},
+                <?php } ?>
+            ]}, {
+            name: 'KW3',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->kw3 }},
+                <?php } ?>
+            ]}, {
+            name: 'KW4',
+            data: [
+                <?php $i=0; ?>
+                <?php foreach($allData1 as $no => $data) { 
+                $i = $i+1;
+                ?>         
+                {{ $data->kw4 }},
+                <?php } ?>
+            ]}
+
+        ]
+    });
+
+</script>
+
+
+{{-- pie --}}
+<script>
+    // Build the chart
+    Highcharts.chart('pie', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: true,
+            type: 'pie'
+        },
+        title: {
+            text: 'Proporsi LIS'
+        },
+        tooltip: {
+            pointFormat: '<b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                },
+                showInLegend: true
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+                // name: 'Brands',
+                colorByPoint: true,
+                data: [
+                	<?php if (!request()->filled('WITEL')) { ?>
+                        <?php $i=0; ?>
+                        <?php foreach($allData as $no => $data) { 
+                            $i = $i+1;
+                        ?>
+                            
+                            {
+                                name: '<?php echo $data->WITEL ?>',
+                                y: <?php echo $data->lis ?>
+                            },
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?php $i=0; ?>
+                        <?php foreach($allData as $no => $data) { 
+                            $i = $i+1;
+                        ?>
+                            
+                            {
+                                name: '<?php echo $data->STO ?>',
+                                y: <?php echo $data->lis ?>
+                            },
+                        <?php } ?>
+                    <?php } ?>
+                ]
+
+
+            }
+
+        ]
+    });
+
+</script>
+
+@endsection
+
+
