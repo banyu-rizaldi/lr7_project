@@ -21,40 +21,46 @@
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-10 col-lg-12 col-md-12">
 
-                <div class="card o-hidden border-0 my-5">
+                <div class="card o-hidden border-1 my-5 px-2">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6">
-                                <h4>
-                                    <font color="black">Welcome to</font><br>
-                                    <p style="text-indent: 45px;">
-                                        <img src="{{ asset('adminLte/img/LOGO I-CARE-1.png') }}" width="300px"
-                                            height="150px">
-                                    </p>
-                                </h4>
-                                <h6>
-                                    <p align="center">iCare adalah sebuah dashboard monitoring yang bertujuan untuk
-                                        memprediksi
-                                        indikasi pelanggan dengan treatment sesuai dengan Masa Length of Stay dan
-                                        Parameter Churn
-                                    </p>
+                            <div class="col-lg-6 bg-secondary">
+                                <div class="mt-5 mb-5">
+                                    <h6 class="text-white">
+                                        <center>
+                                            <div class="px-5">
+                                                <p class="text-justify">
+                                                    <b>&emsp;iCare</b>
+                                                    adalah sebuah dashboard monitoring yang bertujuan untuk
+                                                    memprediksi indikasi pelanggan dengan treatment dengan Masa Length of Stay
+                                                    dan Parameter Churn
+                                                </p>
+                                            </div>
+                                        </center>
+                                    </h6>
+                                </div>
 
-                                    <br><br>
-                                    Contact person / admin : <br>
-                                    Telegram : @rahmaoryza / @rizaldi31
-                                </h6>
+                                <div class="text-center align-bottom">
+                                    <img src="{{ asset('images/login.png') }}" width="420px" height="420px">
+                                </div>
+
                             </div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
+                            <div class="col-lg-6" style="background-color: white">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-0">LOGIN</h1>
+
+                                        <img src="{{ asset('adminLte/img/LOGO I-CARE-1.png') }}" width="250px" height="100px">
+
+                                        <h1 class="h4 text-gray-900 mb-0 mt-2">LOGIN</h1>
                                         <marquee direction="left" class="text-danger mb-2">
                                             LOGIN ready with LDAP TELKOM!
                                         </marquee>
 
+                                        
+                                    </div>
+                                    <form method="POST" action="{{ route('logins') }}">
                                         @if ($message = Session::get('error'))
                                             <div class="alert alert-danger alert-block">
                                                 <button class="close" type="button" data-dismiss="alert">x</button>
@@ -68,8 +74,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </div>
                                         @endif
-                                    </div>
-                                    <form method="POST" action="{{ route('logins') }}">
+
                                         @csrf
                                         <div class="form-group">
                                             <input type="text"
@@ -94,18 +99,21 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group row col-12">
-                                            <div class="row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                      <div class="form-group row justify-content-center">
+                                               
                                                     <div class="captcha">
                                                         <span>{!! captcha_img() !!}</span>
-                                                        {{-- <button type="button" class="btn btn-danger" class="reload" id="reload">
-                                                        &#x21bb;
-                                                    </button> --}}
+                                                        <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                                            &#x21bb;
+                                                        </button>
                                                     </div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <input id="captcha" type="text"
+                                                
+                                                   
+                                                
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input id="captcha" type="text"
                                                         class="form-control @error('captcha') is-invalid @enderror"
                                                         placeholder="Enter Captcha" name="captcha">
                                                     @error('captcha')
@@ -113,8 +121,6 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
-                                                </div>
-                                            </div>
                                         </div>
 
 
@@ -122,14 +128,19 @@
                                             Login
                                         </button>
                                         <hr>
+
+                                        <div class="text-right">
+                                            <br><br>
+                                            <p class="text-dark font-weight-bold">Contact person / admin : <br>
+                                            Telegram : @rahmaoryza / @rizaldi31</p>
+                                        </div>
+
                                     </form>
-                                    <div>
-                                        {{-- <a class="small" href="#">Forgot Password?</a> --}}
-                                    </div>
+                                    
                                     <div>
                                         {{-- Don't have an account? <a href="{{ route('register') }}">Create One</a> --}}
                                     </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -153,18 +164,17 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('sbadmin2/js/sb-admin-2.min.js') }}"></script>
 
-    {{-- <script type="text/javascript">
-        $('#reload').click(function () {
-            $.ajax({
-                type: 'GET',
-                url: '{{ route('reloadCaptcha') }}',
-    success: function (data) {
-    $(".captcha span").html(data.captcha);
-    }
-    });
-    });
-
-    </script> --}}
+    <script type="text/javascript">
+        $('#reload').click(function(){
+          $.ajax({
+             type:'GET',
+             url:'refreshcaptcha',
+             success:function(data){
+                $(".captcha span").html(data.captcha);
+             }
+          });
+        });
+    </script>
 
 </body>
 

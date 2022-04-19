@@ -202,11 +202,11 @@
                                     | {{ $message }}
                                     @enderror</label>
                                 <select name="STATUS" class="custom-select" id="STATUS"> 
-                                    <option value="Open" {{ $item->STATUS == 'Open' ? 'SELECTED' : '' }}>Open</option>
-                                    <option value="Contacted" {{ $item->STATUS == 'Contacted' ? 'SELECTED' : '' }}>Contacted</option>
-                                    <option value="Uncontacted" {{ $item->STATUS == 'Uncontacted' ? 'SELECTED' : '' }}>Uncontacted</option>
-                                    <option value="In-Progress" {{ $item->STATUS == 'In-Progress' ? 'SELECTED' : '' }}>In-Progress</option>
-                                    <option value="Closed" {{ $item->STATUS == 'Closed' ? 'SELECTED' : '' }}>Closed</option>
+                                    <option value="OPEN" {{ $item->STATUS == 'OPEN' ? 'SELECTED' : '' }}>OPEN</option>
+                                    <option value="CONTANCTED" {{ $item->STATUS == 'CONTANCTED' ? 'SELECTED' : '' }}>CONTANCTED</option>
+                                    <option value="UNCONTACTED" {{ $item->STATUS == 'UNCONTACTED' ? 'SELECTED' : '' }}>UNCONTACTED</option>
+                                    <option value="IN-PROGRESS" {{ $item->STATUS == 'IN-PROGRESS' ? 'SELECTED' : '' }}>IN-PROGRESS</option>
+                                    <option value="CLOSED" {{ $item->STATUS == 'CLOSED' ? 'SELECTED' : '' }}>CLOSED</option>
                                 </select>
                             </div>
                         </div>

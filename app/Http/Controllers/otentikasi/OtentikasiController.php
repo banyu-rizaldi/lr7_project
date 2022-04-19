@@ -36,7 +36,7 @@ class OtentikasiController extends Controller
         ]);
         
         // dd(json_decode($response));
-        // dd(session());
+        // dd($response);
 
         if ($response['code'] == '200') {
             session([
@@ -44,7 +44,7 @@ class OtentikasiController extends Controller
                 'auth' => true
             ]);
 
-            return redirect('/dashboard')->with('success', 'Account has been validated');
+            return redirect('/dashboard')->with('success', 'Please select from the options : WITEL & BULAN');
 
         }elseif ($response['code'] == '401'){
 
@@ -60,6 +60,11 @@ class OtentikasiController extends Controller
     {
         $request->session()->flush();
         return redirect('/')->with('message', 'Account has been logout');
+    }
+
+    public function refreshCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
     }
 
 }

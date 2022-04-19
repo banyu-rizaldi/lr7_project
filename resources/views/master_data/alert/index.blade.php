@@ -69,10 +69,10 @@
                                                 <label for="ATRIBUT">ATRIBUT</label>
                                                 <select name="ATRIBUT" id="ATRIBUT" class="form-control">
                                                     <option value=""></option>
-                                                    <option value="VERY BAD LTCY & PKT LOSS" {{ old('ATRIBUT') == 'VERY BAD LTCY & PKT LOSS' ? 'selected' : '' }}>VERY BAD LTCY & PKT LOSS</option>
-                                                    <option value="BAD PAYMENT DATE" {{ old('ATRIBUT') == 'BAD PAYMENT DATE' ? 'selected' : '' }}>BAD PAYMENT DATE</option>
+                                                    <option value="VERY BAD LATENCY" {{ old('ATRIBUT') == 'VERY BAD LATENCY' ? 'selected' : '' }}>VERY BAD LATENCY</option>
+                                                    <option value="VERY BAD PACKET LOSS" {{ old('ATRIBUT') == 'VERY BAD PACKET LOSS' ? 'selected' : '' }}>VERY BAD PACKET LOSS</option>
                                                     <option value="UNSPEC" {{ old('ATRIBUT') == 'UNSPEC' ? 'selected' : '' }}>UNSPEC</option>
-                                                    <option value="USAGE <5GB" {{ old('ATRIBUT') == 'USAGE <5GB' ? 'selected' : '' }}>USAGE < 5GB</option>
+                                                    <option value="USAGE <5GB" {{ old('ATRIBUT') == 'USAGE <5GB' ? 'selected' : '' }}>USAGE &lt;5GB</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -83,11 +83,11 @@
                                                 <label for="STATUS">STATUS</label>
                                                 <select name="STATUS" id="STATUS" class="form-control ">
                                                     <option value=""></option>
-                                                    <option value="Open" {{ old('STATUS') == 'Open' ? 'selected' : '' }}>Open</option>
-                                                    <option value="Contacted" {{ old('STATUS') == 'Contacted' ? 'selected' : '' }}>Contacted</option>
-                                                    <option value="Uncontacted" {{ old('STATUS') == 'Uncontacted' ? 'selected' : '' }}>Uncontacted</option>
-                                                    <option value="In-Progress" {{ old('STATUS') == 'In-Progress' ? 'selected' : '' }}>In-Progress</option>
-                                                    <option value="Closed" {{ old('STATUS') == 'Closed' ? 'selected' : '' }}>Closed</option>
+                                                    <option value="OPEN" {{ old('STATUS') == 'OPEN' ? 'selected' : '' }}>OPEN</option>
+                                                    <option value="CONTACTED" {{ old('STATUS') == 'CONTACTED' ? 'selected' : '' }}>CONTACTED</option>
+                                                    <option value="UNCONTACTED" {{ old('STATUS') == 'UNCONTACTED' ? 'selected' : '' }}>UNCONTACTED</option>
+                                                    <option value="IN-PROGRESS" {{ old('STATUS') == 'IN-PROGRESS' ? 'selected' : '' }}>IN-PROGRESS</option>
+                                                    <option value="CLOSED" {{ old('STATUS') == 'CLOSED' ? 'selected' : '' }}>CLOSED</option>
                                                 </select>
                                             </div>
                                         </div>

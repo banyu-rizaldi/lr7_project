@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('judul','')
+
 
 
 @section('content')
-<section class="content">
+    <section class="content">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -13,10 +13,11 @@
 <param name='host_url' value='https%3A%2F%2Fsmartanalytics0.telkom.co.id%2F' /> 
 <param name='embed_code_version' value='3' /> 
 <param name='site_root' value='&#47;t&#47;TelkomRegionalAnalytics' />
-<param name='name' value='iCareNewDB&#47;VIEWALERT' />
+<param name='name' value='iCareNewDB&#47;VIEWCHRTWITEL' />
 <param name='tabs' value='no' />
 <param name='toolbar' value='yes' />
-<param name='showAppBanner' value='false' /></object></div> 
+<param name='showAppBanner' value='false' /></object>
+</div>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -24,5 +25,5 @@
 @endsection
 
 @section('before-footer')
-	
+    
 @endsection

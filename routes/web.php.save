@@ -26,7 +26,9 @@ Route::group(['middleware' => 'login'], function() {
     // dashboard
     Route::get('/dashboard', 'DetailsController@index')->name('dashboard');
     Route::post('/dashboard', 'DetailsController@index')->name('dashboard');
-
+    
+    Route::get('/profilLoss', 'ProfilingLossController@index')->name('profilLoss');
+    Route::post('/profilLoss', 'ProfilingLossController@index')->name('profilLoss');
    
     Route::get('change-password', 'ChangePasswordController@changePassword')->name('change-password');
     Route::post('update-password', 'ChangePasswordController@updatePassword');
@@ -47,7 +49,7 @@ Route::group(['middleware' => 'login'], function() {
      // akhir analitik
 
      // sales
-    Route::get('sales/index', 'SalesController@index')->name('qosbulan');
+    Route::get('sales/index', 'SalesController@index')->name('sales');
     
     // akhir sales
 
@@ -56,7 +58,6 @@ Route::group(['middleware' => 'login'], function() {
      Route::get('alert-report', 'ReportController@age')->name('alert.report');
      Route::get('alert-view/witel', 'ReportController@witel')->name('alert.witel');
      Route::get('alert', 'ReportController@index')->name('alert.index');
-     
      Route::post('alert/detil', 'ReportController@alert')->name('alert.detil');
      Route::post('alert/getSto', 'ReportController@getSto')->name('alert.getSto');
      Route::get('alert/detils', 'ReportController@alert');
@@ -65,31 +66,16 @@ Route::group(['middleware' => 'login'], function() {
      Route::get('alert/edit/{NOTEL}/{ATRIBUT}', 'ReportController@edit')->name('alert.edit');
      Route::post('alert/update/{NOTEL}', 'ReportController@update')->name('alert.update');
 
-    
-
-    // profil
     Route::get('profil', 'ProfilController@profil')->name('profil');
-    Route::get('profilleveraging', 'ProfilController@leveraging')->name('profilleveraging');
-    Route::get('profilretention', 'ProfilController@retention')->name('profilretention');
-    Route::get('profilkw', 'ProfilController@kw')->name('profilkw');
-    Route::get('profilchurn', 'ProfilController@churn')->name('profilchurn');
-    Route::get('profilLoss', 'ProfilingLossController@index')->name('profilLoss');
-    Route::post('profilLoss', 'ProfilingLossController@index')->name('profilLoss');
-    Route::get('profilcust', 'ProfilCustController@index')->name('profilCust');
-    Route::post('profilcust', 'ProfilCustController@index')->name('profilCust');
-
-    Route::get('profilkwg', 'ProfilController@kwg')->name('profilkwg');
-    Route::get('profilkwg/ajax/{WITEL}', 'ProfilController@kwgAjax');
-    
-    
-    //
+    Route::get('leveraging', 'ProfilController@leveraging')->name('leveraging');
+    Route::get('retention', 'ProfilController@retention')->name('retention');
+    Route::get('kw', 'ProfilController@kw')->name('kw');
+    Route::get('churn', 'ProfilController@churn')->name('churn');
 
     
-    Route::get('qostr2witel', function () {
+    Route::get('qoswitel', function () {
         return view('sales.qoswitel');
-    })->name('qostr2witel');
-
-    Route::get('qostr2bulan', 'SalesController@index')->name('qostr2bulan');
+    })->name('qoswitel');
    
    Route::get('qostr6bulan', function () {
         return view('qostr6.qostr6bybulan');

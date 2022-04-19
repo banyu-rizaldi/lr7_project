@@ -45,7 +45,7 @@
     @yield('css')
 </head>
 
-<body class="hold-transition sidebar-mini layout-navbar-fixed">
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -151,6 +151,7 @@
     </script>
     <!-- Summernote -->
     <script src="{{ asset('adminLte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
     <!-- DataTables  & Plugins -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js">
     </script>
@@ -166,6 +167,9 @@
     <script src="{{ asset('adminLte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('adminLte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('adminLte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <!-- overlay -->
+    <script src="{{ asset('adminLte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminLte/dist/js/adminlte.js') }}"></script>
     {{-- toastr --}}

@@ -21,12 +21,10 @@ class DetailsController extends Controller
         $datakw = DB::table("SUMMARY1")
                 ->select(DB::raw('DISTINCT BULAN'))
                 ->get();
-
-        $ldate = date('Ym');
         
         $bulan = DB::table("SUMMARY1")
                 ->select(DB::raw('DISTINCT BULAN'))
-                ->where('BULAN','=',$ldate)
+                ->where('BULAN','=','202107')
                 ->get();
         // dd($datakw);
 
@@ -35,13 +33,11 @@ class DetailsController extends Controller
                     '*',
                     DB::raw("SUM(TOTAL_LIS) as lis"),
                     DB::raw("SUM(TOTAL_ALERT) as alert"),
-                    DB::raw("SUM(CHURN4+CT09) as loss"),
+                    DB::raw("SUM(TOTAL_CHURN) as churn"),
                     DB::raw("SUM(TOTAL_SALES) as sales"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                    DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-                    DB::raw("SUM(KW1) as kw1"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+|                    DB::raw("SUM(KW1) as kw1"),
                     DB::raw("SUM(KW2) as kw2"),
                     DB::raw("SUM(KW3) as kw3"),
                     DB::raw("SUM(KW4) as kw4"),
@@ -50,7 +46,7 @@ class DetailsController extends Controller
                     DB::raw("(SUM(KW3)/SUM(TOTAL_LIS)) AS x"),
                     DB::raw("(SUM(KW4)/SUM(TOTAL_LIS)) AS y")
                 )
-                ->where('BULAN','=', $ldate)
+                ->where('BULAN','=','202106')
                 ->groupBy('WITEL')
                 ->get();
         
@@ -59,12 +55,10 @@ class DetailsController extends Controller
                     '*',
                     DB::raw("SUM(TOTAL_LIS) as lis"),
                     DB::raw("SUM(TOTAL_ALERT) as alert"),
-                    DB::raw("SUM(CHURN4+CT09) as loss"),
+                    DB::raw("SUM(TOTAL_CHURN) as churn"),
                     DB::raw("SUM(TOTAL_SALES) as sales"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-			        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
                     DB::raw("SUM(KW1) as kw1"),
                     DB::raw("SUM(KW2) as kw2"),
                     DB::raw("SUM(KW3) as kw3"),
@@ -74,45 +68,20 @@ class DetailsController extends Controller
                     DB::raw("(SUM(KW3)/SUM(TOTAL_LIS)) AS x"),
                     DB::raw("(SUM(KW4)/SUM(TOTAL_LIS)) AS y")
                 )
-                ->where('BULAN','=', $ldate)
+                ->where('BULAN','=','202106')
                 ->get();
-
-	$allData2 = DB::table("SUMMARY1")
-            ->select(
-                '*',
-                DB::raw("SUM(TOTAL_LIS) as lis"),
-                DB::raw("SUM(TOTAL_ALERT) as alert"),
-                DB::raw("SUM(CHURN4+CT09) as loss"),
-                DB::raw("SUM(TOTAL_SALES) as sales"),
-                DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                DB::raw("SUM(CT09) as ct0"),
-                DB::raw("SUM(CHURN4) as caps"),
-                DB::raw("SUM(KW1) as kw1"),
-                DB::raw("SUM(KW2) as kw2"),
-                DB::raw("SUM(KW3) as kw3"),
-                DB::raw("SUM(KW4) as kw4"),
-                DB::raw("(SUM(KW1)/SUM(TOTAL_LIS)) AS v"),
-                DB::raw("(SUM(KW2)/SUM(TOTAL_LIS)) AS w"),
-                DB::raw("(SUM(KW3)/SUM(TOTAL_LIS)) AS x"),
-                DB::raw("(SUM(KW4)/SUM(TOTAL_LIS)) AS y")
-            )
-            ->get();
-
 
         $grafik = DB::table("SUMMARY1")
                 ->select(
                     '*',
                     DB::raw("SUM(TOTAL_LIS) as lis"),
                     DB::raw("SUM(TOTAL_ALERT) as alert"),
-                    DB::raw("SUM(CHURN4+CT09) as loss"),
+                    DB::raw("SUM(TOTAL_CHURN) as churn"),
                     DB::raw("SUM(TOTAL_SALES) as sales"),
-		            DB::raw("SUM(TARGET_SALES) as tsales"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                    DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                    DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			        DB::raw("SUM(KW1) as kw1"),
+		    DB::raw("SUM(TARGET_SALES) as tsales"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                    DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                    DB::raw("SUM(KW1) as kw1"),
                     DB::raw("SUM(KW2) as kw2"),
                     DB::raw("SUM(KW3) as kw3"),
                     DB::raw("SUM(KW4) as kw4"),
@@ -138,9 +107,6 @@ class DetailsController extends Controller
                     DB::raw("SUM(IF(BULAN='202110',kw4,0))/SUM(IF(BULAN='202110',total_LIS,0)) as TOTAL_LIS_202110"),
                     DB::raw("SUM(IF(BULAN='202111',kw4,0))/SUM(IF(BULAN='202111',total_LIS,0)) as TOTAL_LIS_202111"),
                     DB::raw("SUM(IF(BULAN='202112',kw4,0))/SUM(IF(BULAN='202112',total_LIS,0)) as TOTAL_LIS_202112"),
-		            DB::raw("SUM(IF(BULAN='202201',kw4,0))/SUM(IF(BULAN='202201',total_LIS,0)) as TOTAL_LIS_202201"),
-                    DB::raw("SUM(IF(BULAN='202202',kw4,0))/SUM(IF(BULAN='202202',total_LIS,0)) as TOTAL_LIS_202202"),
-                    DB::raw("SUM(IF(BULAN='202203',kw4,0))/SUM(IF(BULAN='202203',total_LIS,0)) as TOTAL_LIS_202203")
                 )
                 ->groupBy('WITEL')
                 ->get();
@@ -153,13 +119,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                        DB::raw("SUM(CHURN4) as caps"),
-			            DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -178,13 +142,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -202,14 +164,12 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
                         DB::raw("SUM(TARGET_SALES) as tsales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -227,13 +187,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as churn"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -261,10 +219,7 @@ class DetailsController extends Controller
                         DB::raw("SUM(IF(BULAN='202110',kw4,0))/SUM(IF(BULAN='202110',total_LIS,0)) as TOTAL_LIS_202110"),
                         DB::raw("SUM(IF(BULAN='202111',kw4,0))/SUM(IF(BULAN='202111',total_LIS,0)) as TOTAL_LIS_202111"),
                         DB::raw("SUM(IF(BULAN='202112',kw4,0))/SUM(IF(BULAN='202112',total_LIS,0)) as TOTAL_LIS_202112"),
-                        DB::raw("SUM(IF(BULAN='202201',kw4,0))/SUM(IF(BULAN='202201',total_LIS,0)) as TOTAL_LIS_202201"),
-			DB::raw("SUM(IF(BULAN='202202',kw4,0))/SUM(IF(BULAN='202202',total_LIS,0)) as TOTAL_LIS_202202"),
-			DB::raw("SUM(IF(BULAN='202203',kw4,0))/SUM(IF(BULAN='202203',total_LIS,0)) as TOTAL_LIS_202203")
-		    )
+                    )
                     ->where('WITEL','=',$request->WITEL)
                     ->groupBy('STO')
                     ->get();
@@ -277,13 +232,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -302,13 +255,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -326,13 +277,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -355,13 +304,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -381,13 +328,11 @@ class DetailsController extends Controller
                         '*',
                         DB::raw("SUM(TOTAL_LIS) as lis"),
                         DB::raw("SUM(TOTAL_ALERT) as alert"),
-                        DB::raw("SUM(CHURN4+CT09) as loss"),
+                        DB::raw("SUM(TOTAL_CHURN) as churn"),
                         DB::raw("SUM(TOTAL_SALES) as sales"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_SALES)) AS A"),
-                        DB::raw("(SUM(CHURN4+CT09)/SUM(TOTAL_LIS)) AS B"),
-                        DB::raw("SUM(CT09) as ct0"),
-                    DB::raw("SUM(CHURN4) as caps"),
-			DB::raw("SUM(KW1) as kw1"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_SALES)) AS A"),
+                        DB::raw("(SUM(TOTAL_CHURN)/SUM(TOTAL_LIS)) AS B"),
+                        DB::raw("SUM(KW1) as kw1"),
                         DB::raw("SUM(KW2) as kw2"),
                         DB::raw("SUM(KW3) as kw3"),
                         DB::raw("SUM(KW4) as kw4"),
@@ -406,8 +351,7 @@ class DetailsController extends Controller
         return view('index', [
             'data'=>$data,'allData'=>$allData,'allData1'=>$allData1,'datakw'=>$datakw,'grafik'=>$grafik,
 		'grafiks'=>$grafiks,
-		'bulan'=>$bulan,
-		'allData2'=>$allData2
+		'bulan'=>$bulan
         ]);
     }
 

@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        set_time_limit(8000000000);
+        set_time_limit(300);
     }
     //
     public function index()
@@ -153,22 +153,10 @@ class ReportController extends Controller
         $getData  = DB::table("ALERT")
                     ->select('*')
                     ->where('NOTEL', '=', $NOTEL)
-                    ->where('WITEL', '=', $request->WITEL)
-                    ->where('STO', '=', $request->STO)
-                    ->where('ATRIBUT', '=', $request->ATRIBUT)
-                    ->where('STATUS', '=', $request->STATUS)
-                    ->groupBy('WITEL', 'STO', 'ATRIBUT', 'ALERT')
+                    ->groupBy('STO')
                     ->get();
 
-        $summary = DB::table("ALERT")
-            ->select('*')
-            ->where('NOTEL', '=', $NOTEL)
-            ->where('ATRIBUT', '=', $request->ATRIBUT)
-            ->groupBy('WITEL', 'STO', 'ATRIBUT')
-            ->get();
-
-        // dd($summary);
-        return view('master_data.alert.details', ['summary' => $summary,'getData' => $getData]);
+        return view('master_data.alert.details', ['getData' => $getData]);
     }
 
     public function view($NOTEL)
